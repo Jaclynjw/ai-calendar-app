@@ -70,4 +70,107 @@ html, body {
   cursor: pointer;
 }
 
-/* You may need to add the Font Awesome CDN in your index.html for icons to work */
+.create-event-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+  align-self: flex-start; /* Aligns the button to the start of the flex container */
+}
+
+/* Modal styling */
+.create-event-modal {
+  position: fixed; /* Fixed position to overlay on top of content */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10000; /* High z-index to ensure it's above other content */
+  overflow-y: auto; /* Enables scrolling within the modal */
+}
+
+/* Overlay styling provided by react-modal */
+.ReactModal__Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+  z-index: 9999; /* Below the modal but above other content */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 15px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.submit-event-button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-event-button:hover {
+  background-color: #45a049;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-modal-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .create-event-modal {
+    width: 90%;
+    padding: 10px;
+  }
+}

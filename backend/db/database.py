@@ -48,3 +48,19 @@ def init_app(app):
     app.teardown_appcontext(close_db)
     with app.app_context():
         init_db()
+
+def create_event(event_data):
+    db = get_db()
+    cursor = db.cursor()
+    try:
+        cursor.execute("""
+            INSERT INTO events (timestamp, title, description, location, category)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (event_data['start_time'], event_data['title'], event_data['description'], event_data['location'], event_data['category']))
+        db.commit()
+        return {"success": True, "id": cursor.fetchone()[0]}
+    except Exception as e:
+        print(e)
+        return None
+    finally:
+        cursor.close()
