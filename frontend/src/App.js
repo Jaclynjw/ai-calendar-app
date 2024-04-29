@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 import './App.css'; 
 
-Modal.setAppElement('#root'); // Accessibility best practices
+Modal.setAppElement('#root');
 
 function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -16,10 +16,23 @@ function App() {
   const [endTime, setEndTime] = useState(new Date());
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Meeting'); // default category
+  const [category, setCategory] = useState('Meeting');
+  const [chatHistory, setChatHistory] = useState([]);
+  const [inputText, setInputText] = useState('');
+
+  const handleFileChange = (event) => {
+    // Implementation for file change event
+  };
+
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    // Implementation for when the send button is clicked
+  };
 
   const handleSubmitEvent = async () => {
-    // Validation and submission logic
     if (!eventTitle || !startTime || !endTime) {
       alert('Please fill in all required fields.');
       return;
@@ -28,12 +41,22 @@ function App() {
       alert('Start time must be before end time.');
       return;
     }
-    const event = { title: eventTitle, start_time: startTime, end_time: endTime, location, description, category };
+
+    const event = { 
+      title: eventTitle, 
+      start_time: startTime, 
+      end_time: endTime, 
+      location, 
+      description, 
+      category 
+    };
+
     try {
       const response = await axios.post('/api/events', event);
       if (response.status === 201) {
         alert('Event created successfully!');
         setModalIsOpen(false);
+        // You may want to update state or perform some action upon success
       } else {
         alert('Failed to create event.');
       }
@@ -49,10 +72,7 @@ function App() {
         <button onClick={() => setModalIsOpen(true)} className="create-event-button">
           Create Event
         </button>
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-        />
+        <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
       </div>
       <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} style={customStyles}>
   <div className="modal-header">
@@ -130,13 +150,41 @@ function App() {
     </div>
   </form>
 </Modal>
+      <div className="conversation-container">
+        <div className="chat-history">
+          {chatHistory.map((chat, index) => (
+            <div key={index} className="chat-message">{chat.message}</div>
+          ))}
+        </div>
+        <div className="input-container">
+          <label htmlFor="file-upload" className="file-upload-btn">
+            <i className="fas fa-paperclip"></i>
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            onChange={handleFileChange}
+            className="file-input"
+          />
+          <input
+            type="text"
+            value={inputText}
+            onChange={handleInputChange}
+            placeholder="Type your message..."
+            className="text-input"
+          />
+          <button onClick={handleSubmit} className="send-button">
+            <i className="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
     </div>
-
   );
 }
 
-
 export default App;
+
+
 
 // Styles for the modal to ensure it appears over a slightly grayed-out background
 const customStyles = {

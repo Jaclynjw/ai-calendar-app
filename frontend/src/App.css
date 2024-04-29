@@ -167,6 +167,22 @@ html, body {
   flex-direction: column;
 }
 
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+}
+
+.file-upload-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding-right: 10px;
+}
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 600px) {
   .create-event-modal {
