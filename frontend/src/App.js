@@ -91,29 +91,32 @@ function App() {
       </label>
     </div>
     <div className="form-group">
-      <label htmlFor="start-time">Start Time:</label>
-      <DatePicker
-        id="start-time"
-        selected={startTime}
-        onChange={setStartTime}
-        showTimeSelect
-        dateFormat="Pp"
-        timeIntervals={15}
-        required
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="end-time">End Time:</label>
-      <DatePicker
-        id="end-time"
-        selected={endTime}
-        onChange={setEndTime}
-        showTimeSelect
-        dateFormat="Pp"
-        timeIntervals={15}
-        required
-      />
-    </div>
+  <div className="date-time-picker">
+    <label htmlFor="start-time">Start Time:</label>
+    <DatePicker
+      id="start-time"
+      selected={startTime}
+      onChange={setStartTime}
+      showTimeSelect
+      dateFormat="Pp"
+      timeIntervals={15}
+      required
+    />
+  </div>
+  <div className="date-time-picker">
+    <label htmlFor="end-time">End Time:</label>
+    <DatePicker
+      id="end-time"
+      selected={endTime}
+      onChange={setEndTime}
+      showTimeSelect
+      dateFormat="Pp"
+      timeIntervals={15}
+      required
+    />
+  </div>
+</div>
+
     <div className="form-group">
       <label htmlFor="location">Location:</label>
       <input

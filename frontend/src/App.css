@@ -109,15 +109,39 @@ html, body {
   z-index: 9999; /* Below the modal but above other content */
 }
 
+/*
 .form-group {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
 }
+*/
+
+.form-group {
+  display: flex; /* 启用flex布局 */
+  flex-direction: row; /* 子元素水平排列 */
+  align-items: left; /* 子元素左对齐 */
+  justify-content: space-between; /* 子元素之间平均分配空间 */
+}
+
+.date-time-picker {
+  flex: 1; /* 每个子容器占用可用空间的相等份额 */
+  margin: 0 10px; /* 为选择器之间提供一些水平间距 */
+}
+
+.date-time-picker label {
+  display: block; /* 使标签独占一行 */
+}
+
+.date-time-picker input {
+  width: 100%; /* 输入宽度填充其容器 */
+}
+
 
 .form-group label {
   display: block;
   margin-bottom: 5px;
+  margin-right: 5px;
   font-weight: bold;
 }
 
