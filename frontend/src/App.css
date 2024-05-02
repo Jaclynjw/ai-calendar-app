@@ -1,6 +1,6 @@
 html, body {
   height: 100%;
-  margin: 0;
+  margin: 10px;
 }
 
 #root {
@@ -28,6 +28,8 @@ html, body {
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .chat-history {
@@ -47,6 +49,8 @@ html, body {
   margin-top: 10px;
   background-color: white;
   box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .file-upload-btn {
@@ -68,6 +72,15 @@ html, body {
   background: transparent;
   border: none;
   cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 
 .create-event-button {
@@ -191,20 +204,32 @@ html, body {
   flex-direction: column;
 }
 
-.input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 25px;
-}
 
 .file-upload-btn {
   background: transparent;
   border: none;
   cursor: pointer;
   padding-right: 10px;
+}
+
+.chat-message {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-width: 80%;
+}
+
+.chat-message.user {
+  margin-left: auto;
+  background-color: #d1e7dd;
+  text-align: right;
+}
+
+.chat-message.ai {
+  margin-right: auto;
+  background-color: #f8d7da;
+  text-align: left;
 }
 
 /* Responsive adjustments for smaller screens */

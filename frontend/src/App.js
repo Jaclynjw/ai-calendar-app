@@ -48,9 +48,27 @@ function App() {
     setInputText(event.target.value);
   };
 
-  const handleSubmit = () => {
-    // Implementation for when the send button is clicked
+  const handleSubmit = async () => {
+    if (!inputText.trim()) {
+      return;
+    }
+    const newChat = { role: 'user', message: inputText };
+    // 更新聊天历史以包括用户的新消息
+    setChatHistory(currentChatHistory => [...currentChatHistory, newChat]);
+    setInputText('');
+  
+    try {
+      const response = await axios.post('/api/chat', { message: inputText });
+      const reply = { role: 'bot', message: response.data.ai_message };  // 正确提取 ai_message
+      // 使用函数更新形式确保 chatHistory 是最新的
+      setChatHistory(currentChatHistory => [...currentChatHistory, reply]);
+    } catch (error) {
+      console.error('Chat API error:', error);
+      // 处理错误情况
+      setChatHistory(currentChatHistory => [...currentChatHistory, { role: 'bot', message: 'Sorry, I encountered an error. Please try again.' }]);
+    }
   };
+  
 
   const handleSubmitEvent = async () => {
     if (!eventTitle || !startTime || !endTime) {

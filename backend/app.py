@@ -1,11 +1,36 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
 from db.database import init_app, create_event, get_db
+import openai
+from dotenv import load_dotenv
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 
 # Initialize the database
 init_app(app)
+
+# configure openai
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    user_input = request.json['message']
+    client = openai.OpenAI()
+    try:
+        completion = client.chat.completions.create(
+            model='gpt-3.5-turbo',
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": user_input}
+            ]
+        )
+        ai_message = completion.choices[0].message.content
+        print("AI message:", ai_message)
+        return jsonify({"ai_message": ai_message})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
