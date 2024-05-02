@@ -76,7 +76,7 @@ function App() {
       if (response.status === 201) {
         alert('Event created successfully!');
         setModalIsOpen(false);
-        // You may want to update state or perform some action upon success
+        fetchEvents();
       } else {
         alert('Failed to create event.');
       }
