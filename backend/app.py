@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
-from db.database import init_app, create_event
+from db.database import init_app, create_event, get_db
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 
@@ -36,7 +36,15 @@ def create_new_event():
             return jsonify({"error": "Failed to create event"}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
+    
+@app.route('/api/events', methods=['GET'])
+def get_events():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM events")
+    events = cursor.fetchall()
+    cursor.close()
+    return jsonify(events)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

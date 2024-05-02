@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import Modal from 'react-modal';
@@ -19,6 +19,26 @@ function App() {
   const [category, setCategory] = useState('Meeting');
   const [chatHistory, setChatHistory] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get('/api/events');
+      const formattedEvents = response.data.map(event => ({
+        title: event.title,
+        start: new Date(event.start_time),
+        end: new Date(event.end_time),
+        // 这里可以添加更多 FullCalendar 支持的属性
+      }));
+      setEvents(formattedEvents);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
 
   const handleFileChange = (event) => {
     // Implementation for file change event
@@ -72,7 +92,11 @@ function App() {
         <button onClick={() => setModalIsOpen(true)} className="create-event-button">
           Create Event
         </button>
-        <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
+        <FullCalendar 
+          plugins={[dayGridPlugin]} 
+          initialView="dayGridMonth"
+          events={events} 
+        />
       </div>
       <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} style={customStyles}>
   <div className="modal-header">
