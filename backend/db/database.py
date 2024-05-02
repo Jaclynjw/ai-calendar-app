@@ -3,6 +3,9 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from flask import current_app, g
 from dotenv import load_dotenv
+from dateutil import parser
+from datetime import datetime
+import pytz
 
 load_dotenv()
 
@@ -37,8 +40,7 @@ def init_db():
             end_time TIMESTAMP NOT NULL,
             location VARCHAR(255) DEFAULT NULL,
             description TEXT DEFAULT NULL,
-            category VARCHAR(255) DEFAULT NULL,
-            user_id INTEGER NOT NULL
+            category VARCHAR(255) DEFAULT NULL
         );
     """)
     db.commit()
@@ -49,18 +51,33 @@ def init_app(app):
     with app.app_context():
         init_db()
 
+def parse_datetime(iso_string):
+    # 解析 ISO 8601 格式字符串，并假定它是 UTC 时间
+    return datetime.fromisoformat(iso_string.replace('Z', '+00:00')).astimezone(pytz.utc)
+
+
 def create_event(event_data):
     db = get_db()
     cursor = db.cursor()
     try:
+        # 将日期时间字符串转换为 datetime 对象
+        start_time = parse_datetime(event_data['start_time'])
+        end_time = parse_datetime(event_data['end_time'])
+
         cursor.execute("""
-            INSERT INTO events (timestamp, title, description, location, category)
-            VALUES (%s, %s, %s, %s, %s)
-        """, (event_data['start_time'], event_data['title'], event_data['description'], event_data['location'], event_data['category']))
+            INSERT INTO events (title, start_time, end_time, location, description, category)
+            VALUES (%s, %s, %s, %s, %s, %s) RETURNING id
+        """, (event_data['title'], start_time, end_time, event_data['location'], event_data['description'], event_data['category']))
         db.commit()
-        return {"success": True, "id": cursor.fetchone()[0]}
+        event_id = cursor.fetchone()  # 获取返回的 ID
+        if event_id:
+            return {"success": True, "id": event_id['id']}
+        else:
+            print("No ID returned from the database")
+            return None
     except Exception as e:
-        print(e)
+        print("Database error:", e)
+        db.rollback()  # 出现异常时回滚事务
         return None
     finally:
         cursor.close()

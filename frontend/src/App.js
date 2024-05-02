@@ -46,9 +46,9 @@ function App() {
       title: eventTitle, 
       start_time: startTime, 
       end_time: endTime, 
-      location, 
-      description, 
-      category 
+      location: location, 
+      description: description, 
+      category: category 
     };
 
     try {

@@ -16,12 +16,27 @@ def serve(path):
     else:
         # Serve index.html by default
         return send_from_directory(app.static_folder, 'index.html')
-    
+
 @app.route('/api/events', methods=['POST'])
 def create_new_event():
     data = request.get_json()
-    result = create_event(data)  # This function should handle the database logic
-    return jsonify(result), 201 if result else 400
+    print("Received data:", data)  # 打印接收到的数据
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    required_fields = ['title', 'start_time', 'end_time', 'location', 'description', 'category']
+    if not all(field in data for field in required_fields):
+        print("Missing fields:", [field for field in required_fields if field not in data])  # 打印缺失的字段
+        return jsonify({"error": "Missing required fields"}), 400
+    
+    try:
+        result = create_event(data)
+        if result:
+            return jsonify({"message": "Event created successfully", "event": result}), 201
+        else:
+            return jsonify({"error": "Failed to create event"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
