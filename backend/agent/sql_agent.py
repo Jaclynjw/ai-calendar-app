@@ -52,7 +52,7 @@ datetime_tool = Tool(
 
 def create_agent(
     # tool_llm_name: str = "gpt-4-1106-preview",
-    # agent_llm_name: str = "gpt-4-1106-preview",
+    # agent_llm_name: str = "gpt-4",
     tool_llm_name: str = "gpt-3.5-turbo",
     agent_llm_name: str = "gpt-3.5-turbo",
 ):

@@ -11,8 +11,6 @@ from langchain_core.prompts import (
 )
 
 
-
-
 def get_full_prompt():
     examples = [
         {"input": "List all upcoming events.", "query": "SELECT * FROM events WHERE start_time > CURRENT_TIMESTAMP;"},
@@ -77,23 +75,9 @@ def get_full_prompt():
             "query": "INSERT INTO events (title, start_time, end_time, description) VALUES ('Meeting with Sam', DATE 'tomorrow' + TIME '18:00:00', DATE 'tomorrow' + TIME '21:00:00', 'Discuss project updates.');"
         },
         {
-        "input": "I want to pass the exam before 2024-06-07, break down the study plan for me.",
-        "query": [
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Study Chapter 1', '2024-05-10 09:00:00', '2024-05-10 11:00:00', 'Study Chapter 1 of the textbook.');",
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Review Past Papers', '2024-05-15 09:00:00', '2024-05-15 11:00:00', 'Review past exam papers.');",
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Study Chapter 2', '2024-05-20 09:00:00', '2024-05-20 11:00:00', 'Study Chapter 2 of the textbook.');",
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Mock Exam', '2024-06-01 09:00:00', '2024-06-01 12:00:00', 'Take a mock exam to assess readiness.');"
-        ]
-    },
-    {
-        "input": "I want to lose weight for 10 kg in a month, make a workout plan for me.",
-        "query": [
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Morning Cardio', '2024-05-01 07:00:00', '2024-05-01 08:00:00', '30 minutes of running.');",
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Gym Session', '2024-05-02 18:00:00', '2024-05-02 19:30:00', 'Strength training at the gym.');",
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Yoga Class', '2024-05-04 08:00:00', '2024-05-04 09:00:00', 'Attend a yoga class for flexibility.');",
-            "INSERT INTO events (title, start_time, end_time, description) VALUES ('Cycling', '2024-05-06 07:00:00', '2024-05-06 08:00:00', 'One hour of cycling for cardio.');"
-        ]
-    },
+            "input": "Make an appointment with dentist on 2024-05-10 from 6 to 9 AM",
+            "query": "INSERT INTO events (title, start_time, end_time, description) VALUES ('Dentist Appointment', '2024-05-10 06:00:00', '2024-05-10 09:00:00', 'Dental check-up and cleaning.');"
+        }
     ]
 
 

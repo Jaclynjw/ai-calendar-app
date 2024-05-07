@@ -25,6 +25,18 @@ function App() {
     fetchEvents();
   }, []);
 
+  const refreshCalendar = () => {
+    // fetch new events from the server
+    fetch('/api/events')
+      .then(response => response.json())
+      .then(events => {
+        // Assuming you have a state hook for events
+        setEvents(events);
+      })
+      .catch(error => console.error('Error fetching events:', error));
+  };
+  
+
   const fetchEvents = async () => {
     try {
       const response = await axios.get('/api/events');
@@ -50,24 +62,35 @@ function App() {
 
   const handleSubmit = async () => {
     if (!inputText.trim()) {
-      return;
+      return; // Prevent empty messages from being sent
     }
-    const newChat = { role: 'user', message: inputText };
-    // 更新聊天历史以包括用户的新消息
-    setChatHistory(currentChatHistory => [...currentChatHistory, newChat]);
-    setInputText('');
+  
+    // Add user's message to chat history
+    const userMessage = {
+      role: 'user',
+      message: inputText
+    };
+    setChatHistory(currentChatHistory => [...currentChatHistory, userMessage]);
+    setInputText(''); // Clear the input field
   
     try {
       const response = await axios.post('/api/chat', { message: inputText });
-      const reply = { role: 'bot', message: response.data.ai_message };  // 正确提取 ai_message
-      // 使用函数更新形式确保 chatHistory 是最新的
-      setChatHistory(currentChatHistory => [...currentChatHistory, reply]);
+      const aiMessage = {
+        role: 'ai',
+        message: response.data.ai_message
+      };
+      // Add AI's response to chat history
+      setChatHistory(currentChatHistory => [...currentChatHistory, aiMessage]);
     } catch (error) {
       console.error('Chat API error:', error);
-      // 处理错误情况
-      setChatHistory(currentChatHistory => [...currentChatHistory, { role: 'bot', message: 'Sorry, I encountered an error. Please try again.' }]);
+      setChatHistory(currentChatHistory => [...currentChatHistory, {
+        role: 'ai',
+        message: 'Sorry, I encountered an error. Please try again.'
+      }]);
     }
   };
+  
+  
   
 
   const handleSubmitEvent = async () => {
@@ -196,11 +219,17 @@ function App() {
   </form>
 </Modal>
       <div className="conversation-container">
-        <div className="chat-history">
+      <div className="chat-history">
           {chatHistory.map((chat, index) => (
-            <div key={index} className="chat-message">{chat.message}</div>
+            <div
+              key={index}
+              className={`chat-message ${chat.role === 'user' ? 'user' : 'ai'}`}
+            >
+              {chat.message}
+            </div>
           ))}
-        </div>
+          </div>
+
         <div className="input-container">
           <label htmlFor="file-upload" className="file-upload-btn">
             <i className="fas fa-paperclip"></i>

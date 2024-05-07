@@ -222,16 +222,19 @@ html, body {
 
 .chat-message.user {
   margin-left: auto;
-  background-color: #d1e7dd;
+  background-color: white; /* Changed from #d1e7dd to white */
   text-align: right;
+  color: black; /* Ensuring text is readable on a light background */
+  border: 1px solid #ccc; /* Optional: adds slight definition to the message */
 }
 
 .chat-message.ai {
   margin-right: auto;
-  background-color: #f8d7da;
+  background-color: #63df69; /* Light blue color for AI messages */
   text-align: left;
+  color: black; /* Ensuring text is readable on a light background */
+  border: 1px solid #ccc; /* Optional: adds slight definition to the message */
 }
-
 /* Responsive adjustments for smaller screens */
 @media (max-width: 600px) {
   .create-event-modal {
