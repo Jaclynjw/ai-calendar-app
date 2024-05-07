@@ -3,6 +3,7 @@ import os
 from db.database import init_app, create_event, get_db
 import openai
 from dotenv import load_dotenv
+from agent.sql_agent import create_agent
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 
@@ -16,16 +17,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 @app.route('/api/chat', methods=['POST'])
 def chat():
     user_input = request.json['message']
-    client = openai.OpenAI()
+    agent = create_agent()
     try:
-        completion = client.chat.completions.create(
-            model='gpt-3.5-turbo',
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": user_input}
-            ]
-        )
-        ai_message = completion.choices[0].message.content
+        response = agent.invoke({"input": user_input})
+        ai_message = response.get('output')
         print("AI message:", ai_message)
         return jsonify({"ai_message": ai_message})
     except Exception as e:

@@ -21,3 +21,7 @@
 /frontend/npm-debug.log*
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
+
+#test
+/backend/gpt_test.ipynb
+/backend/new_test.ipynb
