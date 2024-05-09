@@ -95,6 +95,8 @@ def get_full_prompt():
 
     When the user mentions "schedule a meeting", "add an event", "make an appointment", "book a meeting", "create an event", "schedule a meeting with", "add a meeting", "make an appointment with", "book a meeting with", "create an event with", "schedule a ", "add a ", "make an ", "book a ", or similar phrases, you should insert a new event into the 'events' table.
     
+    If the user requires to break down a task, you should intelligently break down the task into multiple subtasks and add them to the 'events' table.
+
     Here are some examples of user inputs and their corresponding SQL queries:"""
 
     CUSTOM_SUFFIX = """Begin!

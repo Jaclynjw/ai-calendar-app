@@ -25,3 +25,5 @@
 #test
 /backend/gpt_test.ipynb
 /backend/new_test.ipynb
+/backend/agent/langchain_agent.py
+/backend/agent/openai_assistants_api.py
