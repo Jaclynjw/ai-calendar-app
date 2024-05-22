@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/622f0053-b019-4c4f-a767-80c51567d3ef/resourceGroups/AiCalendar/providers/Microsoft.Web/sites/aicalendar-app",
+    "appService.deploySubpath": "."
+}
