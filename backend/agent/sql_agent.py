@@ -5,8 +5,8 @@ from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from langchain.agents.agent_types import AgentType
 from langchain.agents import create_sql_agent
 from langchain.memory import ConversationBufferMemory
-from agent.utils import get_chat_openai, get_db
-from agent.few_shot_prompt import get_full_prompt
+from utils import get_chat_openai, get_db
+from few_shot_prompt import get_full_prompt
 
 from langchain.tools import Tool
 from datetime import datetime
