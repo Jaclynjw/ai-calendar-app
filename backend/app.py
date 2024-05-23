@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
-from db.database import init_app, create_event, get_db
+from .db.database import init_app, create_event, get_db
 import openai
 from dotenv import load_dotenv
 from agent.sql_agent import create_agent
