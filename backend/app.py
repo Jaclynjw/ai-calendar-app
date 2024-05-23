@@ -3,7 +3,7 @@ import os
 from .db.database import init_app, create_event, get_db
 import openai
 from dotenv import load_dotenv
-from agent.sql_agent import create_agent
+from .agent.sql_agent import create_agent
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 
